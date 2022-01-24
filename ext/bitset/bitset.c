@@ -311,7 +311,10 @@ static VALUE rb_bitset_to_s(VALUE self) {
     }
     data[bs->len] = 0;
 
-    return rb_str_new2(data);
+    VALUE r_bs = rb_str_new2(data);
+    free(data);
+
+    return r_bs;
 }
 
 static VALUE rb_bitset_from_s(VALUE self, VALUE s) {
