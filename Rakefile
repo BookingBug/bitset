@@ -1,10 +1,17 @@
 require 'rake'
 require 'rubygems'
 
+require 'ruby_memcheck'
+require 'ruby_memcheck/rspec/rake_task'
+
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = ["--color"]
   t.fail_on_error = false
+end
+namespace :spec do
+  memcheck_config = RubyMemcheck.config(binary_name: "bitset")
+  RubyMemcheck::RSpec::RakeTask.new(memcheck_config, :valgrind)
 end
 
 task :default => :spec
