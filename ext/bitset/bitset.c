@@ -556,10 +556,10 @@ static VALUE rb_bitset_equal(VALUE self, VALUE other) {
 }
 
 typedef uint64_t (*bitwise_op)(uint64_t, uint64_t);
-inline uint64_t and(uint64_t a, uint64_t b) { return a & b; }
-inline uint64_t or(uint64_t a, uint64_t b) { return a | b; }
-inline uint64_t xor(uint64_t a, uint64_t b) { return a ^ b; }
-inline uint64_t difference(uint64_t a, uint64_t b) { return a & ~b; }
+static uint64_t bitset_and(uint64_t a, uint64_t b) { return a & b; }
+static uint64_t bitset_or(uint64_t a, uint64_t b) { return a | b; }
+static uint64_t bitset_xor(uint64_t a, uint64_t b) { return a ^ b; }
+static uint64_t bitset_difference(uint64_t a, uint64_t b) { return a & ~b; }
 
 static VALUE mutable(VALUE self, VALUE other, bitwise_op operator) {
     Bitset * bs = get_bitset(self);
@@ -578,19 +578,19 @@ static VALUE mutable(VALUE self, VALUE other, bitwise_op operator) {
 }
 
 static VALUE rb_bitset_union_mutable(VALUE self, VALUE other) {
-    return mutable(self, other, &or);
+    return mutable(self, other, &bitset_or);
 }
 
 static VALUE rb_bitset_intersect_mutable(VALUE self, VALUE other) {
-    return mutable(self, other, &and);
+    return mutable(self, other, &bitset_and);
 }
 
 static VALUE rb_bitset_xor_mutable(VALUE self, VALUE other) {
-    return mutable(self, other, &xor);
+    return mutable(self, other, &bitset_xor);
 }
 
 static VALUE rb_bitset_difference_mutable(VALUE self, VALUE other) {
-    return mutable(self, other, &difference);
+    return mutable(self, other, &bitset_difference);
 }
 
 static VALUE rb_bitset_reset(VALUE self) {
