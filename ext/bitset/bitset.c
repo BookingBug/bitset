@@ -556,10 +556,10 @@ static VALUE rb_bitset_equal(VALUE self, VALUE other) {
 }
 
 typedef uint64_t (*bitwise_op)(uint64_t, uint64_t);
-inline uint64_t bitset_and(uint64_t a, uint64_t b) { return a & b; }
-inline uint64_t bitset_or(uint64_t a, uint64_t b) { return a | b; }
-inline uint64_t bitset_xor(uint64_t a, uint64_t b) { return a ^ b; }
-inline uint64_t bitset_difference(uint64_t a, uint64_t b) { return a & ~b; }
+static uint64_t bitset_and(uint64_t a, uint64_t b) { return a & b; }
+static uint64_t bitset_or(uint64_t a, uint64_t b) { return a | b; }
+static uint64_t bitset_xor(uint64_t a, uint64_t b) { return a ^ b; }
+static uint64_t bitset_difference(uint64_t a, uint64_t b) { return a & ~b; }
 
 static VALUE mutable(VALUE self, VALUE other, bitwise_op operator) {
     Bitset * bs = get_bitset(self);
